@@ -1,8 +1,14 @@
-<ion-view view-title="Browse">
+<ion-view view-title="Pokemons">
   <ion-content>
-    <h1>Pokemons</h1>
+      <div class="bar bar-header item-input-inset">
+          <label class="item-input-wrapper">
+              <i class="icon ion-ios7-search placeholder-icon"></i>
+              <input type="search" ng-model="search" placeholder="Search">
+          </label>
+      </div>
       <ion-list>
-          <ion-item class="item" collection-repeat="pokemon in pokemons.pokemon" href="#/app/{{ pokemon.resource_uri }}">
+          <ion-item class="item" collection-repeat="pokemon in pokemons.pokemon | filter:search"
+                    href="#/app/{{ pokemon.resource_uri }}">
               {{ pokemon.name }}
           </ion-item>
       </ion-list>
