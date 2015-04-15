@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['Pokemon'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal
@@ -33,32 +33,33 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListarCtrl', function($scope, $http) {
-    $http.get('http://pokeapi.co/api/v1/pokedex/1/').then(function(pokemons){
+.controller('ListarCtrl', ['$scope', '$http', 'Pokemon', function($scope, $http, Pokemon) {
+    Pokemon.getPokedex().then(function(pokemons){
         $scope.pokemons = pokemons.data;
     });
-})
-.controller('PokemonCtrl', function($scope, $stateParams, $http) {
+}])
 
 
-        $http.get('http://pokeapi.co/api/v1/pokemon/' + $stateParams.id + '/').then(function(pokemon){
-            $scope.pokemon = pokemon.data;
-            console.log(pokemon.data.sprites[0]);
+.controller('PokemonCtrl',['$scope', '$stateParams', '$http', 'Pokemon', 
+                    function($scope, $stateParams, $http, Pokemon) {
 
 
+         Pokemon.getPokemon($stateParams.id).then( function(_response) {
+              $scope.pokemon = _response.data;
 
-            //return pokemon.data.id;
-            return pokemon.data.sprites[0];
 
-        }).then(function(sprite){
-            console.log(sprite);
-            $http.get('http://pokeapi.co/' + sprite.resource_uri).then(function(sprite){
-                $scope.sprite = 'http://pokeapi.co/' + sprite.data.image;
+              console.log(_response.data);
 
-                //console.log(sprite);
-            });
-        });
+               //return pokemon.data.id;
+            return _response.data;
 
-        //http://pokeapi.co/api/v1/sprite/1/
-        $scope.sprite = null;
-    });
+            }).then(function(_pokemon){
+                /// @TODO              
+                 Pokemon.getSprites(_pokemon).then(function(_responses){
+                    console.log(_responses);
+                 });
+                });
+                    
+                  //http://pokeapi.co/api/v1/sprite/1/
+                  $scope.sprite = null;
+              }]);
