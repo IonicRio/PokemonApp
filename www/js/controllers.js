@@ -1,8 +1,23 @@
-angular.module('starter.controllers', ['Pokemon'])
+angular.module('starter.controllers', ['Pokemon', 'ionic'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicLoading) {
   // Form data for the login modal
   $scope.loginData = {};
+
+
+   $scope.showLoading = function(_message) {
+
+       _message = _message || 'Loading...';
+
+       $ionicLoading.show({
+           template: _message
+       });
+   };
+
+    $scope.hideLoading = function(){
+        $ionicLoading.hide();
+    };
+
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -34,8 +49,12 @@ angular.module('starter.controllers', ['Pokemon'])
 })
 
 .controller('ListarCtrl', ['$scope', '$http', 'Pokemon', function($scope, $http, Pokemon) {
+
+   $scope.showLoading('Loading pokémons...');
+
     Pokemon.getPokedex().then(function(pokemons){
         $scope.pokemons = pokemons.data;
+        $scope.hideLoading();
     });
 }])
 
@@ -44,11 +63,15 @@ angular.module('starter.controllers', ['Pokemon'])
                     function($scope, $stateParams, $http, Pokemon) {
 
 
+         $scope.showLoading();
+
          Pokemon.getPokemon($stateParams.id).then( function(_response) {
               $scope.pokemon = _response.data;
 
 
               console.log(_response.data);
+
+             $scope.hideLoading();
 
                //return pokemon.data.id;
             return _response.data;
