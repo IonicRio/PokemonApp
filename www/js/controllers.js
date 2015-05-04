@@ -46,6 +46,23 @@ angular.module('starter.controllers', ['Pokemon', 'ionic'])
       $scope.closeLogin();
     }, 1000);
   };
+
+// --------Modal from the left Menu---------
+
+  $ionicModal.fromTemplateUrl('templates/about.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.closeAbout = function() {
+    $scope.modal.hide();
+  };
+
+  $scope.showAbout = function() {
+    $scope.modal.show();
+  };
+
 })
 
 .controller('ListarCtrl', ['$scope', '$http', 'Pokemon', function($scope, $http, Pokemon) {
@@ -59,7 +76,7 @@ angular.module('starter.controllers', ['Pokemon', 'ionic'])
 }])
 
 
-.controller('PokemonCtrl',['$scope', '$stateParams', '$http', 'Pokemon', 
+.controller('PokemonCtrl',['$scope', '$stateParams', '$http', 'Pokemon',
                     function($scope, $stateParams, $http, Pokemon) {
 
 
@@ -77,12 +94,12 @@ angular.module('starter.controllers', ['Pokemon', 'ionic'])
             return _response.data;
 
             }).then(function(_pokemon){
-                /// @TODO              
+                /// @TODO
                  Pokemon.getSprites(_pokemon).then(function(_responses){
                     console.log(_responses);
                  });
                 });
-                    
+
                   //http://pokeapi.co/api/v1/sprite/1/
                   $scope.sprite = null;
               }]);

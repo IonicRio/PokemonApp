@@ -18,11 +18,14 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item nav-clear menu-close href="#/app/search">
+<!--         <ion-item nav-clear menu-close href="#/app/search">
           Search
+        </ion-item> -->
+        <ion-item class="item-icon-left" nav-clear menu-close href="#/app/browse">
+          <span class="icon ion-ios-list"></span>Listar
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/browse">
-          Listar
+        <ion-item class="item-icon-left" nav-clear menu-close ng-click="showAbout()">
+          <span class="icon ion-information-circled"></span>Sobre o App
         </ion-item>
       </ion-list>
     </ion-content>
