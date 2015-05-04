@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['Pokemon', 'ionic'])
 
    $scope.showLoading = function(_message) {
 
-       _message = _message || 'Loading...';
+       _message = _message || '<ion-spinner></ion-spinner></br>Loading...';
 
        $ionicLoading.show({
            template: _message
@@ -67,7 +67,7 @@ angular.module('starter.controllers', ['Pokemon', 'ionic'])
 
 .controller('ListarCtrl', ['$scope', '$http', 'Pokemon', function($scope, $http, Pokemon) {
 
-   $scope.showLoading('Loading pokémons...');
+   $scope.showLoading('<ion-spinner></ion-spinner></br>Loading pokémons...');
 
     Pokemon.getPokedex().then(function(pokemons){
         $scope.pokemons = pokemons.data;
