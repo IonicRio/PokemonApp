@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['Pokemon', 'ionic'])
 
    $scope.showLoading = function(_message) {
 
-       _message = _message || 'Loading...';
+       _message = _message || '<ion-spinner></ion-spinner></br>Loading...';
 
        $ionicLoading.show({
            template: _message
@@ -46,11 +46,28 @@ angular.module('starter.controllers', ['Pokemon', 'ionic'])
       $scope.closeLogin();
     }, 1000);
   };
+
+// --------Modal from the left Menu---------
+
+  $ionicModal.fromTemplateUrl('templates/about.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.closeAbout = function() {
+    $scope.modal.hide();
+  };
+
+  $scope.showAbout = function() {
+    $scope.modal.show();
+  };
+
 })
 
 .controller('ListarCtrl', ['$scope', '$http', 'Pokemon', function($scope, $http, Pokemon) {
 
-   $scope.showLoading('Loading pokémons...');
+   $scope.showLoading('<ion-spinner></ion-spinner></br>Loading pokémons...');
 
     Pokemon.getPokedex().then(function(pokemons){
         $scope.pokemons = pokemons.data;
@@ -59,7 +76,7 @@ angular.module('starter.controllers', ['Pokemon', 'ionic'])
 }])
 
 
-.controller('PokemonCtrl',['$scope', '$stateParams', '$http', 'Pokemon', 
+.controller('PokemonCtrl',['$scope', '$stateParams', '$http', 'Pokemon',
                     function($scope, $stateParams, $http, Pokemon) {
 
 
@@ -77,12 +94,12 @@ angular.module('starter.controllers', ['Pokemon', 'ionic'])
             return _response.data;
 
             }).then(function(_pokemon){
-                /// @TODO              
+                /// @TODO
                  Pokemon.getSprites(_pokemon).then(function(_responses){
                     console.log(_responses);
                  });
                 });
-                    
+
                   //http://pokeapi.co/api/v1/sprite/1/
                   $scope.sprite = null;
               }]);
